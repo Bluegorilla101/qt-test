@@ -1,23 +1,18 @@
-import sys
 from cx_Freeze import setup, Executable
 
-base = None
-if sys.platform == 'win32':
-    base = 'Win32GUI'
+# Dependencies are automatically detected, but it might need
+# fine tuning.
+buildOptions = dict(packages = [], excludes = [])
 
-options = {
-    'build_exe': {
-        'includes': 'atexit'
-    }
-}
+import sys
+base = 'Win32GUI' if sys.platform=='win32' else None
 
 executables = [
-    Executable('test_main.py', base=base)
+    Executable('main.py', base=base, targetName = 'test')
 ]
 
-setup(name='simple_PyQt5',
-      version='0.1',
-      description='Sample cx_Freeze PyQt5 script',
-      options=options,
-      executables=executables
-      )
+setup(name='test',
+      version = '1.0',
+      description = 'Just a test',
+      options = dict(build_exe = buildOptions),
+      executables = executables)
